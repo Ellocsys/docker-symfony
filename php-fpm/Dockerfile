@@ -25,6 +25,8 @@ RUN apk add --update \
 
 RUN rm -rf /var/cache/apk/* && rm -rf /tmp/*
 
+WORKDIR /var/www/symfony
+
 ADD symfony.ini /etc/php5/fpm/conf.d/
 ADD symfony.ini /etc/php5/cli/conf.d/
 

@@ -14,10 +14,12 @@ services:
         expose:
             - "9000"
         volumes:
-            - ./symfony:/var/www/symfony
-            - ./logs/symfony:/var/www/symfony/var/logs
+            - ./../symfony:/var/www/symfony
+            - ./../logs/symfony:/var/www/symfony/var/logs
         links:
             - db
+        environment:
+            SYMFONY_ENV: dev
     nginx:
         build: ./nginx
         ports:
@@ -28,6 +30,8 @@ services:
             - php
         volumes:
             - ./logs/nginx/:/var/log/nginx
+        environment:
+            SYMFONY_ENV: dev
     elk:
         image: willdurand/elk
         ports:
@@ -38,3 +42,8 @@ services:
         volumes_from:
             - php
             - nginx
+    composer:
+        image: composer/composer:alpine
+        volumes_from: 
+            - php
+        working_dir: /var/www/symfony

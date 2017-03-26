@@ -1,18 +1,19 @@
 #!/bin/sh
-WORK_DIR="../symfony"
+WORK_DIR="../symfony/"
 
 printf "\n---- Creating upload dir in web/uploads ----\n"
 
-mkdir "${WORK_DIR}"web/uploads
-chmod -R 777 web/uploads
+docker-compose exec php mkdir web/uploads
+docker-compose exec php chmod -R 777 web/uploads
 printf "\n"
 
 printf "\n---- Fixing directory permissions ----\n"
-chmod -R 777 "${WORK_DIR}"var/cache "${WORK_DIR}"var/logs
+# touch "${WORK_DIR}"var/logs/prod.log
+# touch "${WORK_DIR}"var/logs/dev.log
+docker-compose exec php chmod -R 777 var/cache var/logs var/sessions
 printf "\n"
 
 printf "\n---- Clear cache ----\n"
 docker-compose exec php bin/console cache:clear
+docker-compose exec php bin/console cache:clear --env=prod
 printf "\n"
-
-printf "\n---- DONE! ----\n\n"

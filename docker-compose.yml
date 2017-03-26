@@ -47,3 +47,7 @@ services:
         volumes_from: 
             - php
         working_dir: /var/www/symfony
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8080:80
